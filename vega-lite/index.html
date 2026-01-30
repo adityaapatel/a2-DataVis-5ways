@@ -5,10 +5,11 @@
   <title>penguins -Vega-Lite</title>
 
   <!--vega + vega-lite + Vega-embd -->
+  <!-- CDN links -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-
+<!-- styling -->
   <style>
     body { font-family: Arial, sans-serif; background:#f7f7f7; }
     .card { width: 1000px; margin: 40px auto; background:white; padding: 24px; border-radius: 12px; }
@@ -17,40 +18,47 @@
   </style>
 </head>
 <body>
+  <!-- Card Container -->
   <div class="card">
     <h1>Penguins (Vega-Lite)</h1>
     <p>x = flipper length, y = body mass, color = species, size = bill length</p>
     <div id="vis"></div>
   </div>
-
+<!-- Vega-Lite Spec -->
   <script>
+    <!-- Define the Vega-Lite specification -->
     const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "data": { "url": "../data/penglings.csv" },
       "mark": { "type": "point", "opacity": 0.8 },
       "encoding": {
         "x": {
+          
           "field": "flipper_length_mm",
           "type": "quantitative",
           "title": "Flipper Length (mm)",
           "scale": { "zero": false }
         },
+        
         "y": {
           "field": "body_mass_g",
           "type": "quantitative",
           "title": "Body Mass (g)",
           "scale": { "zero": false }
         },
+       
         "color": {
           "field": "species",
           "type": "nominal",
           "title": "Species"
         },
+        
         "size": {
           "field": "bill_length_mm",
           "type": "quantitative",
           "title": "Bill Length (mm)"
         },
+        
         "tooltip": [
           { "field": "species", "type": "nominal" },
           { "field": "island", "type": "nominal" },

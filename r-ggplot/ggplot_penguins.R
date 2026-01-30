@@ -7,10 +7,10 @@ df <- read_csv("../data/penglings.csv", show_col_types = FALSE)
 df$bill_length_mm <- as.numeric(df$bill_length_mm)
 df$flipper_length_mm <- as.numeric(df$flipper_length_mm)
 df$body_mass_g <- as.numeric(df$body_mass_g)
-
 df <- df[!is.na(df$bill_length_mm) &
          !is.na(df$flipper_length_mm) &
          !is.na(df$body_mass_g), ]
+
 # create ggplost
 p <- ggplot(df, aes(
   x = flipper_length_mm,
@@ -27,6 +27,7 @@ p <- ggplot(df, aes(
   theme_minimal()
 
 print(p)
+
 # save plot
 ggsave(
   filename = "ggplot_penguins.png",plot = p, device = "png", width = 7, height = 5,dpi = 300)

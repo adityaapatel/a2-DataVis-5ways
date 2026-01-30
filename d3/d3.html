@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+<!-- D3.js Scatter Plot of Penguins Dataset -->
 <html lang="en">
 <head>
+    // Metadata
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Penguins - d3 scatter (A2)</title>
+  <!-- d3.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <!-- Styling -->
   <style>
+    /* Basic page styling */
     body { font-family: Arial, sans-serif; background: #fafafa; }
     .wrap { width: 900px; margin: 30px auto; background: #fff; padding: 16px; border-radius: 10px; }
     .title { margin: 0 0 6px 0; }
@@ -14,27 +19,29 @@
     .tick text { font-size: 11px; }
   </style>
 </head>
-
+<!-- Body Content -->
 <body>
   <div class="wrap">
     <h2 class="title">Penguins (d3.js)</h2>
     <p class="subtitle">x = flipper length, y = body mass, color = species, size = bill length</p>
     <div id="viz"></div>
   </div>
-
+<!-- D3.js Script -->
   <script>
-    // NOTE: change this if your csv lives somewhere else
-    const DATA_PATH = "../data/penglings.csv"; // or "../penglings.csv"
+    
+    const DATA_PATH = "../data/penglings.csv"; // path to data
 
+<!-- set up svg and margins -->
+// dimensions
     const margin = { top: 20, right: 20, bottom: 55, left: 70 };
     const width = 860 - margin.left - margin.right;
     const height = 460 - margin.top - margin.bottom;
-
+// svg container
     const svg = d3.select("#viz")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom);
-
+// main group
     const g = svg.append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -52,8 +59,9 @@
         bill_length_mm: bill
       };
     }).then(raw => {
-
+      
       // filter out missing values (NA turns into NaN)
+      
       const data = raw.filter(d =>
         !Number.isNaN(d.flipper_length_mm) &&
         !Number.isNaN(d.body_mass_g) &&
@@ -69,11 +77,11 @@
       // add a little padding so dots don't hug edges
       const xPad = 2;
       const yPad = 150;
-
+      // scales
       const x = d3.scaleLinear()
         .domain([xExtent[0] - xPad, xExtent[1] + xPad])
         .range([0, width]);
-
+        // y scale
       const y = d3.scaleLinear()
         .domain([yExtent[0] - yPad, yExtent[1] + yPad])
         .range([height, 0]);
@@ -129,10 +137,10 @@
         .attr("stroke", "#222")
         .attr("stroke-width", 0.3);
 
-      // tiny legend (optional - rubric says not required, but harmless)
+      // LEGEND FOR SPECIES
       const legend = g.append("g")
         .attr("transform", `translate(${width - 140}, 10)`);
-
+// legend title
       speciesList.forEach((sp, i) => {
         const row = legend.append("g").attr("transform", `translate(0, ${i * 18})`);
         row.append("rect")
@@ -146,7 +154,7 @@
           .style("font-size", "12px")
           .text(sp);
       });
-
+ // end of data then
     }).catch(err => {
       console.error("CSV load failed:", err);
       d3.select("#viz").append("p").text("Could not load CSV. Check DATA_PATH and run a local server.");
