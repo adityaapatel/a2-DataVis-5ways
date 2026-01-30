@@ -27,5 +27,7 @@ p <- ggplot(df, aes(
   theme_minimal()
 
 print(p)
+# save plot
+ggsave(
+  filename = "ggplot_penguins.png",plot = p, device = "png", width = 7, height = 5,dpi = 300)
 
-ggsave("../img/ggplot2.png", p, width = 9, height = 5)
